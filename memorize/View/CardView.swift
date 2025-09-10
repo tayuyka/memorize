@@ -12,7 +12,7 @@ struct CardView: View {
                 Text(card.content)
                     .font(.system(size: 40))
             } else {
-                shape.fill(.blue.gradient) // рубашка
+                shape.fill(.blue.gradient)
             }
         }
     }

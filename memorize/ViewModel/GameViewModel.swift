@@ -9,7 +9,6 @@ final class GameViewModel: ObservableObject {
         self.model = GameViewModel.makeGame()
     }
 
-    // Базовый набор эмодзи (можно расширять/менять темами позже)
     private static let allEmojis = [
         "🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼",
         "🐨","🐯","🦁","🐮","🐷","🐸","🐵","🐔"
@@ -20,7 +19,6 @@ final class GameViewModel: ObservableObject {
         return Game<String>(numberOfPairsOfCards: pairs) { index in chosen[index] }
     }
 
-    // MARK: - API для View
     var cards: [Card] { model.cards }
 
     func choose(_ card: Card) { model.choose(card) }
