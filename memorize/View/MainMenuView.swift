@@ -21,7 +21,7 @@ struct MainMenuView: View {
             }
 
             NavigationLink {
-//                ThemesView()
+                ThemesView()
             } label: {
                 Label("Тема", systemImage: "paintpalette.fill")
                     .font(.title3)
@@ -32,7 +32,7 @@ struct MainMenuView: View {
             }
 
             NavigationLink {
-//                RulesView()
+                RulesView()
             } label: {
                 Label("Правила", systemImage: "book.pages.fill")
                     .font(.title3)
