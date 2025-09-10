@@ -4,6 +4,8 @@ final class ThemeManager: ObservableObject {
     @Published private(set) var current: Theme
     private let repo: ThemeRepository
 
+    var allThemes: [Theme] { repo.all }
+
     init(repo: ThemeRepository = InMemoryThemeRepository(),
          initial: Theme? = nil) {
         self.repo = repo
@@ -13,4 +15,3 @@ final class ThemeManager: ObservableObject {
     func set(_ theme: Theme) { current = theme }
     func setRandom() { current = repo.random() }
 }
-
