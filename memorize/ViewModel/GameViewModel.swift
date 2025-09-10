@@ -3,25 +3,29 @@ import Foundation
 final class GameViewModel: ObservableObject {
     typealias Card = Game<String>.Card
 
-    @Published private var model: Game<String>
+    @Published private(set) var model: Game<String>
+    private(set) var theme: Theme
 
-    init() {
-        self.model = GameViewModel.makeGame()
+    init(theme: Theme, pairs: Int? = nil) {
+        self.theme = theme
+        self.model = Self.makeGame(from: theme, pairs: pairs)
     }
 
-    private static let allEmojis = [
-        "🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼",
-        "🐨","🐯","🦁","🐮","🐷","🐸","🐵","🐔"
-    ]
-
-    private static func makeGame(pairs: Int = Int.random(in: 2...5)) -> Game<String> {
-        let chosen = Array(allEmojis.shuffled().prefix(pairs))
-        return Game<String>(numberOfPairsOfCards: pairs) { index in chosen[index] }
+    private static func makeGame(from theme: Theme, pairs: Int?) -> Game<String> {
+        let pairsCount = pairs ?? Int.random(in: 2...5)
+        let chosen = Array(theme.emojis.shuffled().prefix(pairsCount))
+        return Game<String>(numberOfPairsOfCards: pairsCount) { index in chosen[index] }
     }
 
     var cards: [Card] { model.cards }
 
     func choose(_ card: Card) { model.choose(card) }
     func shuffle() { model.shuffle() }
-    func newGame() { model = GameViewModel.makeGame() }
+
+    func newGame() { model = Self.makeGame(from: theme, pairs: nil) }
+
+    func applyTheme(_ newTheme: Theme) {
+        theme = newTheme
+        newGame()
+    }
 }
