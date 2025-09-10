@@ -1,7 +1,8 @@
-
 import SwiftUI
 
 struct MainMenuView: View {
+    @EnvironmentObject private var themeManager: ThemeManager
+
     var body: some View {
         VStack(spacing: 20) {
             Text("Memorize")
@@ -9,13 +10,13 @@ struct MainMenuView: View {
                 .padding(.top, 40)
 
             NavigationLink {
-                GameView(viewModel: GameViewModel())
+                GameView(viewModel: GameViewModel(theme: themeManager.current))
             } label: {
                 Label("Новая игра", systemImage: "play.circle.fill")
                     .font(.title2)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(.blue.gradient)
+                    .background(themeManager.current.accent.gradient)
                     .foregroundStyle(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 14))
             }
@@ -43,14 +44,24 @@ struct MainMenuView: View {
             }
 
             Spacer()
+
+            HStack(spacing: 12) {
+                Text("Текущая тема:")
+                Text(themeManager.current.name).bold()
+                Spacer()
+                Button("Случайная") { themeManager.setRandom() }
+                    .buttonStyle(.bordered)
+            }
         }
         .padding()
         .navigationTitle("Меню")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
+
 #Preview {
-    NavigationStack {
-        MainMenuView()
-    }
+    MainMenuView()
+        .previewInNav()
+        .previewWithTheme()
 }
+
