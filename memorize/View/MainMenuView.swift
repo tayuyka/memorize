@@ -45,15 +45,15 @@ struct MainMenuView: View {
 
             Spacer()
 
-            HStack(spacing: 12) {
-                Text("Текущая тема:")
-                Text(themeManager.current.name).bold()
-                Spacer()
-                Button("Случайная") { themeManager.setRandom() }
-                    .buttonStyle(.bordered)
-            }
         }
         .padding()
+        .safeAreaInset(edge: .bottom) {
+                ThemeFooterView()
+                    .environmentObject(themeManager)
+            }
+        .background(themeManager.current.background.ignoresSafeArea())
+                .toolbarBackground(themeManager.current.background, for: .navigationBar)
+                .toolbarBackground(.visible, for: .navigationBar)
         .navigationTitle("Меню")
         .navigationBarTitleDisplayMode(.inline)
     }
