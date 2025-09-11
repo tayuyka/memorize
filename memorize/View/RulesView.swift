@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct RulesView: View {
+    @EnvironmentObject private var themeManager: ThemeManager
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
@@ -13,11 +15,25 @@ struct RulesView: View {
                 """)
                 .font(.body)
                 .foregroundStyle(.secondary)
-                Spacer()
             }
             .padding()
+            
         }
+        .safeAreaInset(edge: .bottom) {
+                ThemeFooterView()
+                    .environmentObject(themeManager)
+            }
+        .scrollContentBackground(.hidden)
+        .background(themeManager.current.background.ignoresSafeArea())
+            .toolbarBackground(themeManager.current.background, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
         .navigationTitle("Правила")
         .navigationBarTitleDisplayMode(.inline)
     }
+}
+
+#Preview {
+    RulesView()
+        .previewInNav()
+        .previewWithTheme()
 }

@@ -29,6 +29,10 @@ struct ThemesView: View {
                 }
             }
         }
+        .scrollContentBackground(.hidden)
+                .background(themeManager.current.background.ignoresSafeArea())
+                .toolbarBackground(themeManager.current.background, for: .navigationBar)
+                .toolbarBackground(.visible, for: .navigationBar)
         .navigationTitle("Тема")
         .navigationBarTitleDisplayMode(.inline)
     }
