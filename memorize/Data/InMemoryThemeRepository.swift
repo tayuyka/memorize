@@ -4,7 +4,7 @@ struct InMemoryThemeRepository: ThemeRepository {
     let all: [Theme] = [
         Theme(name: "Животные",
               emojis: ["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐨","🐯","🦁","🐮"],
-              background: Color(.sRGB, red: 0.96, green: 0.98, blue: 1.00, opacity: 1),
+              background: Color(.sRGB, red: 0.83, green: 0.85, blue: 1.00, opacity: 1),
               cardBack: Color.blue.opacity(0.75),
               accent: .blue,
               arcFraction: 0.25),
@@ -24,3 +24,10 @@ struct InMemoryThemeRepository: ThemeRepository {
 
     func random() -> Theme { all.randomElement() ?? all[0] }
 }
+
+#Preview {
+    MainMenuView()
+        .previewInNav()
+        .previewWithTheme()
+}
+
