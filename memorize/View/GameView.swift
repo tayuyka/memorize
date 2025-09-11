@@ -3,6 +3,8 @@ import SwiftUI
 struct GameView: View {
     @ObservedObject var viewModel: GameViewModel
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var themeManager: ThemeManager
+
 
     private let columns = [GridItem(.adaptive(minimum: 70), spacing: 12)]
 
@@ -22,27 +24,11 @@ struct GameView: View {
                 }
                 .padding()
             }
-
-            HStack(spacing: 8) {
-                ThemeArc(color: viewModel.theme.accent, fraction: viewModel.theme.arcFraction)
-                    .frame(width: 20, height: 20)
-                Text(viewModel.theme.name)
-                    .font(.callout).bold()
-                    .padding(.horizontal, 8).padding(.vertical, 4)
-                    .background(.ultraThinMaterial, in: Capsule())
-            }
-            .padding([.top, .trailing], 12)
         }
-        .navigationTitle("Memorize")
+        .navigationTitle(Text(viewModel.theme.name))
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button { dismiss() } label: {
-                    Label("Меню", systemImage: "chevron.backward")
-                }
-            }
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button("Shuffle") { viewModel.shuffle() }
-                Button("New Game") { viewModel.newGame() }
             }
         }
     }
