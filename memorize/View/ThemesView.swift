@@ -4,64 +4,37 @@ struct ThemesView: View {
     @EnvironmentObject private var themeManager: ThemeManager
 
     var body: some View {
-        List {
-            Section("Выберите тему") {
-                ForEach(themeManager.allThemes) { theme in
-                    Button {
-                        themeManager.set(theme)
-                    } label: {
-                        HStack {
-                            ThemeArc(color: theme.accent, fraction: theme.arcFraction)
-                                .frame(width: 28, height: 28)
-                            Text(theme.name).bold()
-                            Spacer()
-                            ColorSwatch(color: theme.cardBack)
-                            ColorSwatch(color: theme.background)
+        ScrollView {
+            VStack(spacing: 16) {
+                SectionContainer("Выберите тему") {
+                    ForEach(themeManager.allThemes) { theme in
+                        ThemeRow(theme: theme) { themeManager.set(theme) }
+                        if theme.id != themeManager.allThemes.last?.id {
+                            Divider().overlay(.white)
                         }
                     }
                 }
-            }
-            Section {
-                Button {
-                    themeManager.setRandom()
-                } label: {
-                    Label("Случайная тема", systemImage: "shuffle")
+
+                SectionContainer {
+                    Button {
+                        themeManager.setRandom()
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: "shuffle")
+                            Text("Случайная тема").bold()
+                            Spacer()
+                        }
+                        .padding(.vertical, 6)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
+            .padding(.horizontal, 16)
+            .padding(.top, 12)
+            .padding(.bottom, 24)
         }
-        .scrollContentBackground(.hidden)
-                .background(themeManager.current.background.ignoresSafeArea())
-                .toolbarBackground(themeManager.current.background, for: .navigationBar)
-                .toolbarBackground(.visible, for: .navigationBar)
-        .navigationTitle("Тема")
-        .navigationBarTitleDisplayMode(.inline)
+        .themedBackground(themeManager.current.backgroundGradient)
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .glassNavBar(toolBarLabel: "Тема")
     }
 }
-
-private struct ColorSwatch: View {
-    let color: Color
-    var body: some View {
-        RoundedRectangle(cornerRadius: 6)
-            .fill(color)
-            .frame(width: 20, height: 20)
-            .overlay(RoundedRectangle(cornerRadius: 6).stroke(.secondary.opacity(0.3)))
-    }
-}
-
-private struct ThemeArc: View {
-    let color: Color
-    let fraction: CGFloat
-    var body: some View {
-        Circle()
-            .trim(from: 0, to: min(max(fraction, 0), 1))
-            .stroke(color, style: StrokeStyle(lineWidth: 4, lineCap: .round))
-            .rotationEffect(.degrees(-90))
-    }
-}
-
-#Preview {
-    ThemesView()
-        .previewInNav()
-        .previewWithTheme()
-}
-
