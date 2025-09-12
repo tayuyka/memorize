@@ -7,40 +7,25 @@ struct MainMenuView: View {
         VStack(spacing: 20) {
             Text("Memorize")
                 .font(.largeTitle).bold()
-                .padding(.top, 40)
+                .padding(40)
+                .foregroundStyle(.white)
 
             NavigationLink {
                 GameView(viewModel: GameViewModel(theme: themeManager.current))
             } label: {
-                Label("Новая игра", systemImage: "play.circle.fill")
-                    .font(.title2)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(themeManager.current.accent.gradient)
-                    .foregroundStyle(.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                GlassCapsule(systemImage: "play.circle.fill", title: "Новая игра", theme: themeManager.current)
             }
-
+            
             NavigationLink {
                 ThemesView()
             } label: {
-                Label("Тема", systemImage: "paintpalette.fill")
-                    .font(.title3)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(.secondary.opacity(0.15))
-                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                GlassCapsule(systemImage: "paintpalette.fill", title: "Тема", theme: themeManager.current)
             }
-
+            
             NavigationLink {
                 RulesView()
             } label: {
-                Label("Правила", systemImage: "book.pages.fill")
-                    .font(.title3)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(.secondary.opacity(0.15))
-                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                GlassCapsule(systemImage: "book.pages.fill", title: "Правила",theme: themeManager.current)
             }
 
             Spacer()
@@ -51,11 +36,9 @@ struct MainMenuView: View {
                 ThemeFooterView()
                     .environmentObject(themeManager)
             }
-        .background(themeManager.current.background.ignoresSafeArea())
-                .toolbarBackground(themeManager.current.background, for: .navigationBar)
-                .toolbarBackground(.visible, for: .navigationBar)
-        .navigationTitle("Меню")
-        .navigationBarTitleDisplayMode(.inline)
+        .themedBackground(themeManager.current.backgroundGradient)
+        .glassNavBar(toolBarLabel: "Меню")
+        
     }
 }
 
