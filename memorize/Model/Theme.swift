@@ -2,27 +2,33 @@ import SwiftUI
 
 struct Theme: Identifiable, Hashable {
     let id: UUID
-    let name: LocalizedStringKey
+    let name: String
     let emojis: [String]
-    let background: Color
+    let backgroundGradient: [Color]
     let cardBack: Color
     let accent: Color
     let arcFraction: CGFloat
+    let cardStyle: CardStyle
+    let sectionsStyle: SectionsStyle
 
     init(id: UUID = .init(),
-         name: LocalizedStringKey,
+         name: String,
          emojis: [String],
-         background: Color,
+         backgroundGradient: [Color],
          cardBack: Color,
          accent: Color,
-         arcFraction: CGFloat) {
+         arcFraction: CGFloat,
+         cardStyle: CardStyle = .default,
+         sectionsStyle: SectionsStyle = .default) {
         self.id = id
         self.name = name
         self.emojis = emojis
-        self.background = background
+        self.backgroundGradient = backgroundGradient
         self.cardBack = cardBack
         self.accent = accent
         self.arcFraction = arcFraction
+        self.cardStyle = cardStyle
+        self.sectionsStyle = sectionsStyle
     }
 
     static func == (lhs: Theme, rhs: Theme) -> Bool {
