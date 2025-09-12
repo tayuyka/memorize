@@ -5,30 +5,27 @@ struct RulesView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Правила игры")
-                    .font(.largeTitle).bold()
-                Text("""
-                • Открывай по две карты.
-                • Если эмодзи совпали — пара засчитывается.
-                • Если не совпали — попробуй ещё раз.
-                """)
-                .font(.body)
-                .foregroundStyle(.secondary)
+            VStack(spacing: 16) {
+                SectionContainer("Правила игры") {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("• Открывай по две карты.")
+                        Text("• Если эмодзи совпали — пара засчитывается.")
+                        Text("• Если не совпали — попробуй ещё раз.")
+                    }
+                    .padding(.vertical, 12)
+                    .foregroundStyle(.white)
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
             }
-            .padding()
-            
+            .padding(.horizontal, 16)
+            .padding(.top, 48)
+            .padding(.bottom, 24)
         }
-        .safeAreaInset(edge: .bottom) {
-                ThemeFooterView()
-                    .environmentObject(themeManager)
-            }
-        .scrollContentBackground(.hidden)
-        .background(themeManager.current.background.ignoresSafeArea())
-            .toolbarBackground(themeManager.current.background, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
-        .navigationTitle("Правила")
-        .navigationBarTitleDisplayMode(.inline)
+        .themedBackground(themeManager.current.backgroundGradient)
+        .toolbarBackground(.clear, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
+        .glassNavBar(toolBarLabel: "Правила")
     }
 }
 
