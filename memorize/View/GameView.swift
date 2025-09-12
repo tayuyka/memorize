@@ -10,12 +10,10 @@ struct GameView: View {
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            viewModel.theme.background.ignoresSafeArea()
-
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 12) {
                     ForEach(viewModel.cards) { card in
-                        CardView(card: card, backColor: viewModel.theme.cardBack)
+                        CardView(card: card, theme: viewModel.theme)
                             .aspectRatio(2/3, contentMode: .fit)
                             .onTapGesture { viewModel.choose(card) }
                             .opacity(card.isMatched ? 0 : 1)
@@ -25,10 +23,15 @@ struct GameView: View {
                 .padding()
             }
         }
+        .themedBackground(themeManager.current.backgroundGradient)
+            .toolbarBackground(.clear, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+        .glassNavBar(toolBarLabel: viewModel.theme.name)
         .navigationTitle(Text(viewModel.theme.name))
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
-                Button("Shuffle") { viewModel.shuffle() }
+                Button("Перемешать") { viewModel.shuffle() }
+                    .foregroundStyle(.white)
             }
         }
     }
