@@ -18,8 +18,8 @@ struct RulesView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
+            .padding(.top, 12)
             .padding(.horizontal, 16)
-            .padding(.top, 48)
             .padding(.bottom, 24)
         }
         .themedBackground(themeManager.current.backgroundGradient)
