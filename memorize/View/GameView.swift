@@ -8,14 +8,23 @@ struct GameView: View {
 
     private let columns = [GridItem(.adaptive(minimum: 70), spacing: 12)]
 
+    @State private var lastScore: Int = 0
+    @State private var flashText: String? = nil
+    @State private var flashPositive: Bool = true
+
     var body: some View {
         ZStack(alignment: .topTrailing) {
+
+            
+
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 12) {
                     ForEach(viewModel.cards) { card in
                         CardView(card: card, theme: viewModel.theme)
                             .aspectRatio(2/3, contentMode: .fit)
-                            .onTapGesture { viewModel.choose(card) }
+                            .onTapGesture {
+                                viewModel.choose(card)
+                            }
                             .opacity(card.isMatched ? 0 : 1)
                             .animation(.easeInOut, value: viewModel.cards)
                     }
@@ -32,33 +41,46 @@ struct GameView: View {
             ScoreFooterView(viewModel: viewModel)
         }
         .themedBackground(themeManager.current.backgroundGradient)
-            .toolbarBackground(.clear, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
         .glassNavBar(toolBarLabel: viewModel.theme.name)
-        .navigationTitle(Text(viewModel.theme.name))
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
-                Button("Перемешать") { viewModel.shuffle() }
-                    .foregroundStyle(.white)
+                Button {
+                    viewModel.useHint()
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "lightbulb")
+                        Text("Подсказка")
+                    }
+                }
+                .disabled(!viewModel.hintAvailable)
+                .opacity(viewModel.hintAvailable ? 1 : 0.4)
+                .foregroundStyle(.white)
+            }
+        }
+        .onAppear {
+            lastScore = viewModel.score
+        }
+        .onChange(of: viewModel.score) { oldValue, newValue in
+            let delta = newValue - oldValue
+            guard delta != 0 else { return } 
+
+            switch delta {
+            case 2:
+                flashText = "+2"
+                flashPositive = true
+            case -5:
+                flashText = "-5"
+                flashPositive = false
+            case ..<0:
+                flashText = "-1"
+                flashPositive = false
+            default:
+                return
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                flashText = nil
             }
         }
     }
 }
-
-private struct ThemeArc: View {
-    let color: Color
-    let fraction: CGFloat
-    var body: some View {
-        Circle()
-            .trim(from: 0, to: min(max(fraction, 0), 1))
-            .stroke(color, style: StrokeStyle(lineWidth: 3, lineCap: .round))
-            .rotationEffect(.degrees(-90))
-    }
-}
-
-
-#Preview {
-    GameView(viewModel: .preview)
-        .previewInNav()
-}
-
