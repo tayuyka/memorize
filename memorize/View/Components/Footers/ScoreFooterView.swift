@@ -17,12 +17,14 @@ struct ScoreFooterView: View {
                 Button("Перемешать") { viewModel.shuffle() }
                     .foregroundStyle(.white)
                     .bold(true)
+                    .lineLimit(1)
 
                 Spacer()
 
                 Button("Новая игра") { showDifficulty = true }
                     .foregroundStyle(.white)
                     .bold(true)
+                    .lineLimit(1)
             }
         }
         .overlay(

@@ -8,7 +8,7 @@ struct SectionsStyle: Hashable {
 
 
         static let `default` = SectionsStyle(
-            corner: 22,
+            corner: 12,
             strokeOpacity: 0.65,
             strokeWidth: 1.2,
             backgroundOpacity: 0.01
@@ -22,7 +22,7 @@ struct CardStyle: Hashable {
         let backBackgroundOpacity: CGFloat
 
         static let `default` = CardStyle(
-            corner: 22,
+            corner: 10,
             strokeOpacity: 0.65,
             strokeWidth: 1.2,
             frontBackgroundOpacity: 0.01,
