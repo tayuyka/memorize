@@ -4,7 +4,7 @@ struct GameView: View {
     @ObservedObject var viewModel: GameViewModel
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var themeManager: ThemeManager
-
+    @State private var showDifficulty = false
 
     private let columns = [GridItem(.adaptive(minimum: 70), spacing: 12)]
 
@@ -80,5 +80,24 @@ struct GameView: View {
                 flashText = nil
             }
         }
+        .alert("Поздравляем! 🎉", isPresented: $viewModel.showGameOver) {
+                    Button("Новая игра") {
+                        showDifficulty = true
+                    }
+                    Button("В меню", role: .cancel) {
+                        dismiss()
+                    }
+                } message: {
+                    Text("Ваш счёт: \(viewModel.score)")
+                }
+                .overlay(
+                    GlassBottomSheet(isPresented: $showDifficulty) {
+                        DifficultyPickerSheet { pairs in
+                            viewModel.newGame(pairs: pairs)
+                            showDifficulty = false
+                        }
+                    }
+                    .environmentObject(themeManager)
+                )
     }
 }
