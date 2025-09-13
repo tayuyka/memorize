@@ -32,6 +32,7 @@ final class GameViewModel: ObservableObject {
 
     var cards: [Card] { model.cards }
     var score: Int { model.score }
+    var totalPairs: Int { model.cards.count }
 
     func choose(_ card: Card) {
         let wasFinished = model.isFinished
