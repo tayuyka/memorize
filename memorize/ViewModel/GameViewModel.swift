@@ -5,6 +5,15 @@ final class GameViewModel: ObservableObject {
 
     @Published private(set) var model: Game<String>
     private(set) var theme: Theme
+    
+    @Published private(set) var hintUsed = false
+       var hintAvailable: Bool { !hintUsed }
+
+       func useHint() {
+           guard !hintUsed else { return }
+           hintUsed = true
+           model.applyHintPenalty()
+       }
 
     init(theme: Theme, pairs: Int? = nil) {
         self.theme = theme
@@ -18,6 +27,7 @@ final class GameViewModel: ObservableObject {
     }
 
     var cards: [Card] { model.cards }
+    var score: Int { model.score }
 
     func choose(_ card: Card) { model.choose(card) }
     func shuffle() { model.shuffle() }
