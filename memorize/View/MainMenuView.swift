@@ -13,7 +13,7 @@ struct MainMenuView: View {
             NavigationLink {
                 GameView(viewModel: GameViewModel(theme: themeManager.current))
             } label: {
-                GlassCapsule(systemImage: "play.circle.fill", title: "Новая игра", theme: themeManager.current)
+                GlassCapsule(systemImage: "play.circle.fill", title: "Играть", theme: themeManager.current)
             }
             
             NavigationLink {
