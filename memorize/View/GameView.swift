@@ -22,6 +22,14 @@ struct GameView: View {
                 }
                 .padding()
             }
+            
+            if let text = flashText {
+                ScoreFlashLayer(text: text, isPositive: flashPositive)
+            }
+
+        }
+        .attachFooter {
+            ScoreFooterView(viewModel: viewModel)
         }
         .themedBackground(themeManager.current.backgroundGradient)
             .toolbarBackground(.clear, for: .navigationBar)
