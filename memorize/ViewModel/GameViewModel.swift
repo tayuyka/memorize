@@ -6,12 +6,15 @@ final class GameViewModel: ObservableObject {
     @Published private(set) var model: Game<String>
     private(set) var theme: Theme
     
+    @Published var showAllCardsTemporarily = false
+    
     @Published private(set) var hintUsed = false
        var hintAvailable: Bool { !hintUsed }
 
        func useHint() {
            guard !hintUsed else { return }
            hintUsed = true
+           revealAllCardsForOneSecond()
            model.applyHintPenalty()
        }
 
@@ -25,6 +28,13 @@ final class GameViewModel: ObservableObject {
         let chosen = Array(theme.emojis.shuffled().prefix(pairsCount))
         return Game<String>(numberOfPairsOfCards: pairsCount) { index in chosen[index] }
     }
+    
+    private func revealAllCardsForOneSecond() {
+        showAllCardsTemporarily = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.showAllCardsTemporarily = false
+        }
+    }
 
     var cards: [Card] { model.cards }
     var score: Int { model.score }
@@ -32,7 +42,10 @@ final class GameViewModel: ObservableObject {
     func choose(_ card: Card) { model.choose(card) }
     func shuffle() { model.shuffle() }
 
-    func newGame() { model = Self.makeGame(from: theme, pairs: nil) }
+    func newGame() {
+        hintUsed = false
+        model = Self.makeGame(from: theme, pairs: nil)
+    }
 
     func applyTheme(_ newTheme: Theme) {
         theme = newTheme
