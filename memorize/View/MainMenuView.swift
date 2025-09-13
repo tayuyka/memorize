@@ -32,10 +32,7 @@ struct MainMenuView: View {
 
         }
         .padding()
-        .safeAreaInset(edge: .bottom) {
-                ThemeFooterView()
-                    .environmentObject(themeManager)
-            }
+        .attachFooter { ThemeFooterView() }
         .themedBackground(themeManager.current.backgroundGradient)
         .glassNavBar(toolBarLabel: "Меню")
         

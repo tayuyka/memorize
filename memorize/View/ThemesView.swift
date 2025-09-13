@@ -36,5 +36,6 @@ struct ThemesView: View {
         .themedBackground(themeManager.current.backgroundGradient)
         .toolbarBackground(.hidden, for: .navigationBar)
         .glassNavBar(toolBarLabel: "Тема")
+        .attachFooter { ThemeFooterView() }
     }
 }

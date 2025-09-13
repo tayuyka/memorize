@@ -23,9 +23,8 @@ struct RulesView: View {
             .padding(.bottom, 24)
         }
         .themedBackground(themeManager.current.backgroundGradient)
-        .toolbarBackground(.clear, for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
         .glassNavBar(toolBarLabel: "Правила")
+        .attachFooter { ThemeFooterView() }
     }
 }
 
