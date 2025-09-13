@@ -18,7 +18,7 @@ struct InMemoryThemeRepository: ThemeRepository {
             emojis: ["🍎","🍊","🍋","🍉","🍇","🍓","🍒","🥝","🍍","🥑","🌶️","🥐"],
             backgroundGradient: [
                 Color(red: 0.7, green: 0.4, blue: 0.15),
-                Color(red: 0.6, green: 0.2, blue: 0.1)
+                Color(red: 1, green: 0.6, blue: 0)
             ],
             cardBack: Color.orange.opacity(0.8),
             accent: .orange,
