@@ -1,10 +1,3 @@
-//
-//  memorizeUITests.swift
-//  memorizeUITests
-//
-//  Created by Влад Рыжкин on 09.09.2025.
-//
-
 import XCTest
 
 final class memorizeUITests: XCTestCase {
