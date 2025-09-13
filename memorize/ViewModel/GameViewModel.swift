@@ -7,16 +7,10 @@ final class GameViewModel: ObservableObject {
     private(set) var theme: Theme
     
     @Published var showAllCardsTemporarily = false
+    @Published var showGameOver = false
     
     @Published private(set) var hintUsed = false
        var hintAvailable: Bool { !hintUsed }
-
-       func useHint() {
-           guard !hintUsed else { return }
-           hintUsed = true
-           revealAllCardsForOneSecond()
-           model.applyHintPenalty()
-       }
 
     init(theme: Theme, pairs: Int? = nil) {
         self.theme = theme
@@ -39,7 +33,21 @@ final class GameViewModel: ObservableObject {
     var cards: [Card] { model.cards }
     var score: Int { model.score }
 
-    func choose(_ card: Card) { model.choose(card) }
+    func choose(_ card: Card) {
+        let wasFinished = model.isFinished
+        model.choose(card)
+        if model.isFinished && !wasFinished {
+            showGameOver = true
+        }
+    }
+    
+    func useHint() {
+        guard !hintUsed else { return }
+        hintUsed = true
+        revealAllCardsForOneSecond()
+        model.applyHintPenalty()
+    }
+    
     func shuffle() { model.shuffle() }
 
     func newGame(pairs: GamePairs) {
