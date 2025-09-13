@@ -2,6 +2,8 @@ import SwiftUI
 
 struct MainMenuView: View {
     @EnvironmentObject private var themeManager: ThemeManager
+    @State private var showDifficulty = false
+    @State private var route: GameRoute? = nil
 
     var body: some View {
         VStack(spacing: 20) {
@@ -10,8 +12,8 @@ struct MainMenuView: View {
                 .padding(40)
                 .foregroundStyle(.white)
 
-            NavigationLink {
-                GameView(viewModel: GameViewModel(theme: themeManager.current))
+            Button {
+                showDifficulty = true
             } label: {
                 GlassCapsule(systemImage: "play.circle.fill", title: "Играть", theme: themeManager.current)
             }
@@ -29,13 +31,25 @@ struct MainMenuView: View {
             }
 
             Spacer()
-
         }
         .padding()
         .attachFooter { ThemeFooterView() }
         .themedBackground(themeManager.current.backgroundGradient)
         .glassNavBar(toolBarLabel: "Меню")
-        
+        .navigationDestination(item: $route) { route in
+            let vm = GameViewModel(theme: themeManager.current,
+                                   pairs: route.pairs.pairCount)
+            GameView(viewModel: vm)
+        }
+
+        .overlay(
+            GlassBottomSheet(isPresented: $showDifficulty) {
+                DifficultyPickerSheet { pairs in
+                    route = GameRoute(pairs: pairs)
+                    showDifficulty = false
+                }
+            }
+        )
     }
 }
 
