@@ -1,9 +1,7 @@
 import SwiftUI
 
 struct ScoreFooterView: View {
-    @EnvironmentObject private var themeManager: ThemeManager
     @ObservedObject var viewModel: GameViewModel
-    @State private var showDifficulty = false
 
     var body: some View {
         FooterContainer {
@@ -21,20 +19,13 @@ struct ScoreFooterView: View {
 
                 Spacer()
 
-                Button("Новая игра") { showDifficulty = true }
+                Button("Подсказка") { viewModel.useHint() }
                     .foregroundStyle(.white)
+                    .disabled(!viewModel.hintAvailable)
+                    .opacity(viewModel.hintAvailable ? 1 : 0.4)
                     .bold(true)
                     .lineLimit(1)
             }
         }
-        .overlay(
-            GlassBottomSheet(isPresented: $showDifficulty) {
-                DifficultyPickerSheet { pairs in
-                    viewModel.newGame(pairs: pairs)
-                    showDifficulty = false
-                }
-            }
-            .environmentObject(themeManager)
-        )
     }
 }

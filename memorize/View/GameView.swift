@@ -47,15 +47,12 @@ struct GameView: View {
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button {
-                    viewModel.useHint()
+                    showDifficulty = true
                 } label: {
                     HStack(spacing: 6) {
-                        Image(systemName: "lightbulb")
-                        Text("Подсказка")
+                        Text("Новая игра")
                     }
                 }
-                .disabled(!viewModel.hintAvailable)
-                .opacity(viewModel.hintAvailable ? 1 : 0.4)
                 .foregroundStyle(.white)
             }
         }
