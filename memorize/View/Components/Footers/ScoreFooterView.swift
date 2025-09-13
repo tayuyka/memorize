@@ -14,6 +14,7 @@ struct ScoreFooterView: View {
                 
                 Button("Перемешать") { viewModel.shuffle() }
                     .foregroundStyle(.white)
+                    .bold(true)
 
                Spacer()
 
@@ -21,6 +22,7 @@ struct ScoreFooterView: View {
                     viewModel.newGame()
                 }
                 .foregroundStyle(.white)
+                .bold(true)
             }
         }
     }
