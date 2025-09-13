@@ -3,13 +3,14 @@ import SwiftUI
 struct CardView: View {
     let card: GameViewModel.Card
     let theme: Theme
+    let showAll: Bool
 
     var body: some View {
         let style = theme.cardStyle
         let shape = RoundedRectangle(cornerRadius: style.corner, style: .continuous)
 
         ZStack {
-            if card.isFaceUp {
+            if card.isFaceUp || showAll {
                 shape
                     .fill(.ultraThinMaterial)
                     .background(shape.fill(Color.white.opacity(style.frontBackgroundOpacity)))
