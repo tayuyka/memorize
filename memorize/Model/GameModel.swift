@@ -2,6 +2,7 @@ import Foundation
 
 struct Game<CardContent: Equatable> {
     private(set) var cards: [Card]
+    private(set) var score: Int = 0
 
     private var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get { cards.indices.filter { cards[$0].isFaceUp && !cards[$0].isMatched }.only }
@@ -17,8 +18,15 @@ struct Game<CardContent: Equatable> {
                 if cards[matchIndex].content == cards[index].content {
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
+                    score += 2
                 }
                 cards[index].isFaceUp = true
+                if cards[matchIndex].content != cards[index].content {
+                    if cards[index].hasBeenSeen { score -= 1 }
+                    if cards[matchIndex].hasBeenSeen { score -= 1 }
+                    cards[index].hasBeenSeen = true
+                    cards[matchIndex].hasBeenSeen = true
+                }
             } else {
                 indexOfTheOneAndOnlyFaceUpCard = index
             }
@@ -26,6 +34,10 @@ struct Game<CardContent: Equatable> {
     }
 
     mutating func shuffle() { cards.shuffle() }
+    
+    mutating func applyHintPenalty() {
+        score -= 5
+    }
 
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
         cards = []
@@ -40,6 +52,7 @@ struct Game<CardContent: Equatable> {
     struct Card: Identifiable, Equatable {
         var isFaceUp = false
         var isMatched = false
+        var hasBeenSeen = false
         let content: CardContent
         let id: Int
     }
