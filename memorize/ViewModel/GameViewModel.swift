@@ -31,7 +31,7 @@ final class GameViewModel: ObservableObject {
     
     private func revealAllCardsForOneSecond() {
         showAllCardsTemporarily = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.showAllCardsTemporarily = false
         }
     }
@@ -42,13 +42,9 @@ final class GameViewModel: ObservableObject {
     func choose(_ card: Card) { model.choose(card) }
     func shuffle() { model.shuffle() }
 
-    func newGame() {
+    func newGame(pairs: GamePairs) {
         hintUsed = false
-        model = Self.makeGame(from: theme, pairs: nil)
-    }
-
-    func applyTheme(_ newTheme: Theme) {
-        theme = newTheme
-        newGame()
+        showAllCardsTemporarily = false
+        model = Self.makeGame(from: theme, pairs: pairs.pairCount)
     }
 }
