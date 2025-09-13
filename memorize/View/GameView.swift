@@ -15,12 +15,10 @@ struct GameView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
 
-            
-
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 12) {
                     ForEach(viewModel.cards) { card in
-                        CardView(card: card, theme: viewModel.theme)
+                        CardView(card: card, theme: viewModel.theme, showAll: viewModel.showAllCardsTemporarily)
                             .aspectRatio(2/3, contentMode: .fit)
                             .onTapGesture {
                                 viewModel.choose(card)
