@@ -4,7 +4,10 @@ struct InMemoryThemeRepository: ThemeRepository {
     let all: [Theme] = [
         Theme(
             name: "Животные",
-            emojis: ["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐨","🐯","🦁","🐮"],
+            emojis: [
+                "🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐨","🐯","🦁","🐮",
+                "🐷","🐸","🐵","🐔","🐧","🐦","🐤","🦆","🦅","🦉","🦇","🐢"
+            ],
             backgroundGradient: [
                 Color(hue: 0.75, saturation: 0.5, brightness: 0.55),
                 Color(hue: 0.63, saturation: 0.6, brightness: 0.6)
@@ -15,7 +18,10 @@ struct InMemoryThemeRepository: ThemeRepository {
         ),
         Theme(
             name: "Еда",
-            emojis: ["🍎","🍊","🍋","🍉","🍇","🍓","🍒","🥝","🍍","🥑","🌶️","🥐"],
+            emojis: [
+                "🍎","🍊","🍋","🍉","🍇","🍓","🍒","🥝","🍍","🥑","🌶️","🥐",
+                "🍌","🥭","🍑","🍈","🍏","🥥","🥒","🥦","🥬","🥕","🥔","🌽"
+            ],
             backgroundGradient: [
                 Color(red: 0.7, green: 0.4, blue: 0.15),
                 Color(red: 1, green: 0.6, blue: 0)
@@ -26,7 +32,10 @@ struct InMemoryThemeRepository: ThemeRepository {
         ),
         Theme(
             name: "Эмоции",
-            emojis: ["😀","😅","😂","🥲","😍","🤓","😎","🤩","😡","😱","😴","🤠"],
+            emojis: [
+                "🍎","🍊","🍋","🍉","🍇","🍓","🍒","🥝","🍍","🥑","🌶️","🥐",
+                "🍌","🥭","🍑","🍈","🍏","🥥","🥒","🥦","🥬","🥕","🥔","🌽"
+            ],
             backgroundGradient: [
                 Color(hue: 0.40, saturation: 0.65, brightness: 0.55),
                 Color(hue: 0.55, saturation: 0.55, brightness: 0.55)
