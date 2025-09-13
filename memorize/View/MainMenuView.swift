@@ -8,8 +8,10 @@ struct MainMenuView: View {
     var body: some View {
         VStack(spacing: 20) {
             Text("Memorize")
-                .font(.largeTitle).bold()
-                .padding(40)
+                .font(.system(size: 64, weight: .black, design: .default))
+                .padding(.horizontal, 18)
+                .padding(.top, 42)
+                .padding(.bottom, 18)
                 .foregroundStyle(.white)
 
             Button {
