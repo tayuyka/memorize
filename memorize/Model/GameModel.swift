@@ -56,6 +56,10 @@ struct Game<CardContent: Equatable> {
         let content: CardContent
         let id: Int
     }
+    
+    var isFinished: Bool {
+            cards.allSatisfy { $0.isMatched }
+        }
 }
 
 private extension Array {
