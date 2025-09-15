@@ -1,10 +1,3 @@
-//
-//  memorizeTests.swift
-//  memorizeTests
-//
-//  Created by Влад Рыжкин on 09.09.2025.
-//
-
 import Testing
 @testable import memorize
 
