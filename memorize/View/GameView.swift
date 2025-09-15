@@ -16,16 +16,20 @@ struct GameView: View {
         ZStack(alignment: .topTrailing) {
 
             ScrollView {
-                LazyVGrid(columns: columns, spacing: 12) {
-                    ForEach(viewModel.cards) { card in
-                        CardView(card: card, theme: viewModel.theme, showAll: viewModel.showAllCardsTemporarily)
-                            .aspectRatio(2/3, contentMode: .fit)
-                            .onTapGesture {
-                                viewModel.choose(card)
-                            }
-                            .opacity(card.isMatched ? 0 : 1)
-                            .animation(.easeInOut, value: viewModel.cards)
-                    }
+                FittingGrid(
+                    itemCount: viewModel.cards.count,
+                    spacing: 12,
+                    horizontalPadding: 0,
+                    aspectRatio: 2/3,
+                    baseMinWidth: 70
+                ) { idx, cellW in
+                    let card = viewModel.cards[idx]
+                    CardView(card: card,
+                             theme: viewModel.theme,
+                             showAll: viewModel.showAllCardsTemporarily)
+                        .onTapGesture { viewModel.choose(card) }
+                        .opacity(card.isMatched ? 0 : 1)
+                        .animation(.easeInOut, value: viewModel.cards)
                 }
                 .padding()
             }
@@ -43,15 +47,12 @@ struct GameView: View {
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button {
-                    viewModel.useHint()
+                    showDifficulty = true
                 } label: {
                     HStack(spacing: 6) {
-                        Image(systemName: "lightbulb")
-                        Text("Подсказка")
+                        Text("Новая игра")
                     }
                 }
-                .disabled(!viewModel.hintAvailable)
-                .opacity(viewModel.hintAvailable ? 1 : 0.4)
                 .foregroundStyle(.white)
             }
         }
@@ -88,7 +89,7 @@ struct GameView: View {
                         dismiss()
                     }
                 } message: {
-                    Text("Ваш счёт: \(viewModel.score)")
+                    Text("Ваш счёт: \(viewModel.score) из \(viewModel.totalPairs)")
                 }
                 .overlay(
                     GlassBottomSheet(isPresented: $showDifficulty) {

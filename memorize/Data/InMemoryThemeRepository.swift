@@ -9,8 +9,8 @@ struct InMemoryThemeRepository: ThemeRepository {
                 "🐷","🐸","🐵","🐔","🐧","🐦","🐤","🦆","🦅","🦉","🦇","🐢"
             ],
             backgroundGradient: [
-                Color(hue: 0.75, saturation: 0.5, brightness: 0.55),
-                Color(hue: 0.63, saturation: 0.6, brightness: 0.6)
+                Color(hue: 0.65, saturation: 0.65, brightness: 0.55),
+                Color(hue: 0.80, saturation: 0.55, brightness: 0.65)
             ],
             cardBack: Color.purple.opacity(0.7),
             accent: .blue,
@@ -23,9 +23,9 @@ struct InMemoryThemeRepository: ThemeRepository {
                 "🍌","🥭","🍑","🍈","🍏","🥥","🥒","🥦","🥬","🥕","🥔","🌽"
             ],
             backgroundGradient: [
-                Color(red: 0.7, green: 0.4, blue: 0.15),
-                Color(red: 1, green: 0.6, blue: 0)
-            ],
+               Color(hue: 0.0, saturation: 0.75, brightness: 0.65),
+               Color(hue: 0.08, saturation: 0.8, brightness: 0.9)
+           ],
             cardBack: Color.orange.opacity(0.8),
             accent: .orange,
             arcFraction: 0.33
@@ -37,8 +37,8 @@ struct InMemoryThemeRepository: ThemeRepository {
                 "🍌","🥭","🍑","🍈","🍏","🥥","🥒","🥦","🥬","🥕","🥔","🌽"
             ],
             backgroundGradient: [
-                Color(hue: 0.40, saturation: 0.65, brightness: 0.55),
-                Color(hue: 0.55, saturation: 0.55, brightness: 0.55)
+                Color(hue: 0.33, saturation: 0.7, brightness: 0.25),
+                Color(hue: 0.33, saturation: 0.6, brightness: 0.6)
             ],
             cardBack: Color.green.opacity(0.75),
             accent: .green,
