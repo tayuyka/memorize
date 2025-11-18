@@ -6,28 +6,8 @@ struct ThemesView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                SectionContainer("Выберите тему") {
-                    ForEach(themeManager.allThemes) { theme in
-                        ThemeRow(theme: theme) { themeManager.set(theme) }
-                        if theme.id != themeManager.allThemes.last?.id {
-                            Divider().overlay(.white)
-                        }
-                    }
-                }
-
-                SectionContainer {
-                    Button {
-                        themeManager.setRandom()
-                    } label: {
-                        HStack(spacing: 8) {
-                            Image(systemName: "shuffle")
-                            Text("Случайная тема").bold()
-                            Spacer()
-                        }
-                        .padding(.vertical, 6)
-                    }
-                    .buttonStyle(.plain)
-                }
+                chooseThemeContainer
+                randomThemeContainer
             }
             .padding(.horizontal, 16)
             .padding(.top, 12)
@@ -38,4 +18,34 @@ struct ThemesView: View {
         .glassNavBar(toolBarLabel: "Тема")
         .attachFooter { ThemeFooterView() }
     }
+}
+
+private extension ThemesView {
+    var chooseThemeContainer: some View {
+        SectionContainer("Выберите тему") {
+            ForEach(themeManager.allThemes) { theme in
+                ThemeRow(theme: theme) { themeManager.set(theme) }
+                if theme.id != themeManager.allThemes.last?.id {
+                    Divider().overlay(.white)
+                }
+            }
+        }
+    }
+    
+    var randomThemeContainer: some View {
+        SectionContainer {
+            Button {
+                themeManager.setRandom()
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "shuffle")
+                    Text("Случайная тема").bold()
+                    Spacer()
+                }
+                .padding(.vertical, 6)
+            }
+            .buttonStyle(.plain)
+        }
+    }
+    
 }

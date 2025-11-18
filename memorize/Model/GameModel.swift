@@ -16,7 +16,7 @@ struct Game<CardContent: Equatable> {
         }
     }
 
-    mutating func choose(_ card: Card) {
+    mutating func choose(card: Card) {
         guard let index = cards.firstIndex(where: { $0.id == card.id }) else { return }
         guard !cards[index].isFaceUp, !cards[index].isMatched else { return }
 
@@ -39,7 +39,9 @@ struct Game<CardContent: Equatable> {
         }
     }
 
-    mutating func shuffle() { cards.shuffle() }
+    mutating func shuffle() {
+        cards.shuffle()
+    }
     
     mutating func applyHintPenalty() {
         score -= 5
@@ -64,11 +66,9 @@ struct Game<CardContent: Equatable> {
     }
     
     var isFinished: Bool {
-            cards.allSatisfy { $0.isMatched }
+        cards.allSatisfy {
+            $0.isMatched
         }
-}
-
-private extension Array {
-    var only: Element? { count == 1 ? first : nil }
+    }
 }
 

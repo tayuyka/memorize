@@ -21,54 +21,19 @@ struct MainMenuView: View {
                 .ignoresSafeArea()
 
             VStack(spacing: vSpacing) {
-                Text("Memorize")
-                    .font(titleFont)
-                    .foregroundStyle(.white)
-                    .padding(.top, titleTop)
-                    .padding(.bottom, titleBottom)
-                    .padding(.horizontal, 18)
-                    .minimumScaleFactor(0.7)
-
-                Button { showDifficulty = true } label: {
-                    GlassCapsule(systemImage: "play.circle.fill",
-                                 title: "Играть",
-                                 theme: themeManager.current)
-                }
-
-                NavigationLink {
-                    ThemesView()
-                } label: {
-                    GlassCapsule(systemImage: "paintpalette.fill",
-                                 title: "Тема",
-                                 theme: themeManager.current)
-                }
-
-                NavigationLink {
-                    RulesView()
-                } label: {
-                    GlassCapsule(systemImage: "book.pages.fill",
-                                 title: "Правила",
-                                 theme: themeManager.current)
-                }
-
-                Spacer(minLength: 0)
+                title
+                startGameButton
+                themeButton
+                rulesButton
             }
             .padding(.horizontal, hPadding)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
         .glassNavBar(toolBarLabel: "Меню")
-
         .safeAreaInset(edge: .bottom) {
             ThemeFooterView()
                 .environmentObject(themeManager)
         }
-
-        .navigationDestination(item: $route) { route in
-            let vm = GameViewModel(theme: themeManager.current,
-                                   pairs: route.pairs.pairCount)
-            GameView(viewModel: vm)
-        }
-
         .overlay(
             GlassBottomSheet(isPresented: $showDifficulty) {
                 DifficultyPickerSheet { pairs in
@@ -79,9 +44,57 @@ struct MainMenuView: View {
             .ignoresSafeArea()
             .zIndex(10)
         )
+        .navigationDestination(item: $route) { route in
+            let vm = GameViewModel(theme: themeManager.current,
+                                   pairs: route.pairs.pairCount)
+            GameView(viewModel: vm)
+        }
     }
 }
 
+// MARK: - layout
+
+private extension MainMenuView {
+
+    var title: some View {
+        Text("Memorize")
+            .font(titleFont)
+            .foregroundStyle(.white)
+            .padding(.top, titleTop)
+            .padding(.bottom, titleBottom)
+            .padding(.horizontal, 12)
+            .minimumScaleFactor(0.7)
+    }
+    
+    var startGameButton: some View {
+        Button { showDifficulty = true } label: {
+            GlassCapsule(systemImage: "play.circle.fill",
+                         title: "Играть",
+                         theme: themeManager.current)
+        }
+    }
+    
+    var themeButton: some View {
+        NavigationLink {
+            ThemesView()
+        } label: {
+            GlassCapsule(systemImage: "paintpalette.fill",
+                         title: "Тема",
+                         theme: themeManager.current)
+        }
+    }
+    
+    var rulesButton: some View {
+        NavigationLink {
+            RulesView()
+        } label: {
+            GlassCapsule(systemImage: "book.pages.fill",
+                         title: "Правила",
+                         theme: themeManager.current)
+        }
+    }
+    
+}
 
 #Preview {
     MainMenuView()
