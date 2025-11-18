@@ -19,12 +19,10 @@ extension GameViewModel {
 }
 
 extension View {
-    /// Оборачивает в NavigationStack (часто нужно для тулбара/титула)
     func previewInNav() -> some View {
         NavigationStack { self }
     }
 
-    /// Подкладывает ThemeManager.preview как EnvironmentObject
     func previewWithTheme() -> some View {
         self.environmentObject(ThemeManager.preview)
     }

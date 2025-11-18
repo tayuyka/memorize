@@ -32,11 +32,11 @@ final class GameViewModel: ObservableObject {
 
     var cards: [Card] { model.cards }
     var score: Int { model.score }
-    var totalPairs: Int { model.cards.count }
+    var totalCards: Int { model.cards.count }
 
     func choose(_ card: Card) {
         let wasFinished = model.isFinished
-        model.choose(card)
+        model.choose(card: card)
         if model.isFinished && !wasFinished {
             showGameOver = true
         }
@@ -49,7 +49,9 @@ final class GameViewModel: ObservableObject {
         model.applyHintPenalty()
     }
     
-    func shuffle() { model.shuffle() }
+    func shuffle() {
+        model.shuffle()
+    }
 
     func newGame(pairs: GamePairs) {
         hintUsed = false
